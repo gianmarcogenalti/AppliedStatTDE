@@ -1,0 +1,83 @@
+"rapine" "furti" "borseggi"
+"Northumberland" 8.95 9.85 29.94
+"Tyne and Wear" 7.63 15.88 30.25
+"Durham" 15.76 19.22 36.12
+"Cumbria" 6.26 12.49 31.35
+"Lancashire" 6.6 14.92 29.05
+"Blackpool" 9.47 12.96 30.42
+"Blackburn with Darwen" 11.73 18.71 32.88
+"West Yorkshire" 11.65 13.88 30.48
+"North Yorkshire" 11.12 14.31 29.25
+"Darlington" 10.58 16.1 29.33
+"Stockton-on-Tees" 14.06 19.03 27.95
+"Middlesbrough" 9.5 13.75 28.73
+"Hartlepool" 8.71 11.05 28.8
+"Redcar and Cleveland" 11.91 19.95 35.15
+"York" 12.31 17.63 30.21
+"East Riding of Yorkshire" 10.18 13 29.07
+"Hull" 11.71 16.3 32.99
+"North Lincolnshire" 14.23 18.58 32.33
+"North East Lincolnshire" 4.68 12.48 26.23
+"Lincolnshire" 12.13 14.22 31.62
+"Nottinghamshire" 13.46 13.23 29.02
+"Nottingham" 27.49 13.63 54.45
+"South Yorkshire" 11.38 16.03 29.11
+"Derbyshire" 11.24 15.03 27.7
+"Derby" 5.39 11.17 27.51
+"Grande Manchester" 10.49 14.87 53.31
+"Merseyside" 6.28 10.75 47.55
+"Halton" 8.32 11.17 28.25
+"Warrington" 8.76 11.96 31.76
+"Cheshire" 14.28 19.99 36.5
+"Shropshire" 13.01 13.44 31.73
+"Telford and Wrekin" 8.16 15.16 30.28
+"Staffordshire" 10.23 12.96 25.05
+"Stoke-on-Trent" 11.74 12.32 30.65
+"West Midlands" 9.85 15.37 30.59
+"Warwickshire" 14.03 16.64 36.12
+"Leicestershire" 9.63 8.87 24.71
+"Leicester" 9.49 15.79 30.55
+"Rutland" 15.64 18.3 33.29
+"Northamptonshire" 11.38 21.02 30.13
+"Peterborough" 7.66 13.58 28.09
+"Cambridgeshire" 10.16 17.36 31.72
+"Norfolk" 9.57 17.65 29.13
+"Suffolk" 8.64 12.43 25.03
+"Essex" 5.29 6.97 28.19
+"Southend-on-Sea" 13.41 20.55 34.25
+"Thurrock" 10.99 17.17 33.38
+"Hertfordshire" 3.94 8.63 22.18
+"Bedfordshire" 10.29 14.53 27.97
+"Luton" 12.33 14.2 29.83
+"Milton Keynes" 7.48 13.41 28.85
+"Buckinghamshire" 7.95 10.6 28.03
+"Oxfordshire" 14.87 21.21 37.85
+"Gloucestershire" 8.51 12.02 26.21
+"Worcestershire" 10.77 14.43 28.01
+"Herefordshire" 9.28 13.7 29.36
+"South Gloucestershire" 9.8 17.57 33.01
+"Bristol" 8.79 12.35 49.98
+"North Somerset" 3.95 11.14 27.92
+"Bath and North East Somerset" 13.76 14.99 28.45
+"Wiltshire" 11.95 18.88 31.29
+"Swindon" 7.2 12.37 28.84
+"Berkshire" 7.7 12.87 26.74
+"Grande Londra" 10.9 14.21 52.7
+"Medway" 10.33 14.78 34.45
+"Kent" 9.43 13.91 27.31
+"East Sussex" 12.16 15.28 33.66
+"Brighton and Hove" 9.81 13.15 55.04
+"West Sussex" 8.93 10.62 27.74
+"Surrey" 11.8 15.45 27.16
+"Hampshire" 11.3 15.06 30.53
+"Southampton" 8.86 13.82 54.71
+"Portsmouth" 11.41 18.79 31.78
+"Isola di Wight" 7.71 16.55 33.72
+"Dorset" 10.42 17.16 31.2
+"Poole" 7.74 16.11 31.91
+"Bournemouth" 9.86 17.78 25.75
+"Somerset" 8.65 14.04 28.58
+"Devon" 9.94 15.15 28.18
+"Torbay" 9.12 14.53 30.41
+"Plymouth" 2.57 12.82 29.57
+"Cornovaglia" 5.66 16.14 28.6
