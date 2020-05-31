@@ -283,7 +283,7 @@ ls()
 #_______________________________________________________________________________
 ##### Example: analysis of quantitative data (with plots) 
 
-record <- read.table('record_mod.txt', header=T)
+record <- read.table('record.txt', header=T)
 record
 
 # some synthetic indices
