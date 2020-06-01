@@ -32,6 +32,7 @@ summary(aov_all)
 ### Modello ridotto
 aov_r <- aov(lm(value ~ type))
 summary(aov_r)
+#boxplot(value ~ type, data = kimono)
 
 mean_type <- tapply(kimono$value, kimono$type, mean)
 
@@ -49,8 +50,5 @@ paste(levels(type)[1],"-",levels(type)[2])
 as.numeric(c(mean_type[1]-mean_type[2] - qt(1-alpha/(2*k), n-g) * sqrt( S * ( 1/ng[1] + 1/ng[2])),
              mean_type[1]-mean_type[2] + qt(1-alpha/(2*k), n-g) * sqrt( S * ( 1/ng[1] + 1/ng[2]))))
 
-
-as.numeric(c(mean_type[1]-mean_type[2]-qt(1-alpha/2,df=pmin(ng[1],ng[2])-1)*sqrt(var(value[ type==levels(type)[1] ])/ng[1]+var(value[ type==levels(type)[2] ])/ng[2]),
-             mean_type[1]-mean_type[2]+qt(1-alpha/2,df=pmin(ng[1],ng[2])-1)*sqrt(var(value[ type==levels(type)[1] ])/ng[1]+var(value[ type==levels(type)[2] ])/ng[2])))
 
 detach(kimono)

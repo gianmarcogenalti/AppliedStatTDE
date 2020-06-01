@@ -19,21 +19,33 @@ mcshapiro.test <- function (X, devstmax = 0.01, sim = ceiling(1/(4 * devstmax^2)
 }
 
 bento <- read.csv("C:/Users/ffede/OneDrive/Desktop/AppliedStatTDE/Old exams (in English)/030717/bento.txt", sep="")
+attach(bento)
 
-mcshapiro.test(bento[,c(1,5)])
-mcshapiro.test(bento[,c(2,6)])
-mcshapiro.test(bento[,c(3,7)])
-mcshapiro.test(bento[,c(4,8)])
+diff <- data.frame(rice = rice_hanami - rice_nohanami, sashimi = sashimi_hanami - sashimi_nohanami, vegetables = 
+                           vegetables_hanami - vegetables_nohanami, okashi = okashi_hanami - okashi_nohanami)
+
+mcshapiro.test(diff)
+#they are gaussian
+
+means <- colMeans(diff)
+Sd <- cov(diff)
+n <- dim(diff)[1]
+p <- 4
 
 
-n <- dim(bento)[1]
-S <- cov(bento[,c(i,j)])
-M <- sapply(bento,mean)
+test_stat <- n*t(means)%*%solve(Sd)%*%means
+p_val <- 1 - pf((n-p)/((n-1)*p)*test_stat, p, n-p)
+p_val
 
-# Test: H0: C*mu=0 vs H1: C*mu!=0
-Md <- C %*% M
-Sd <- C %*% S %*% t(C)
-Sdinv <- solve(Sd)
-T2 <- n * t( Md - delta.0 ) %*% Sdinv %*% ( Md - delta.0 )
-cfr.fisher <- ((q-1)*(n-1)/(n-(q-1)))*qf(1-alpha,(q-1),n-(q-1))
-P <- 1-pf(T2*(n-(q-1))/((q-1)*(n-1)),(q-1),n-(q-1))
+# data are gaussian and they are different
+
+sim <- function(a){
+    return(c(inf = t(a)%*%means - sqrt((n-1)*p/(n-p)*qf(1 - alpha, p, n-p))*sqrt(t(a)%*%Sd%*%a/n), sup = t(a)%*%means + sqrt((n-1)*p/(n-p)*qf(1 - alpha, p, n-p))*sqrt(t(a)%*%Sd%*%a/n)))
+}
+
+print(sim(c(1,0,0,0)))
+print(sim(c(0,1,0,0)))
+print(sim(c(0,0,1,0)))
+print(sim(c(0,0,0,1)))
+
+# evidenza per 2 e per 4
