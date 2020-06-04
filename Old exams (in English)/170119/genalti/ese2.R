@@ -1,4 +1,4 @@
-install.packages('DescTools')
+#install.packages('DescTools')
 library('DescTools')
 
 load("mcshapiro.test.RData")
@@ -43,6 +43,7 @@ plot(df[,1], df[,2], pch = 16, col = cluster.es)
 points(centroids, col = 'blue', pch = 16)
 dev.off()
 
+df <- read.table("diamonds.txt")
 df$clu <- as.vector(cluster.es)
 
 mcshapiro.test(df[which(df$clu == 1),1:2])#pval = 0.2552
@@ -82,6 +83,7 @@ P <- 1 - pf(T2/(p*(n1+n2-2)/(n1+n2-1-p)), p, n1+n2-1-p)
 P  
 # P-value is null -> I reject the null hypothesis and accept the alternative one: there are two type of diamonds
 
+
 # Simultaneous Bonferroni intervals
 res <- aov(formula = Diameter ~ as.factor(clu), data = df)
 PostHocTest(res, method = "bonferroni")
@@ -91,7 +93,7 @@ PostHocTest(res, method = "bonferroni")
 
 # $`as.factor(clu)`
 # diff   lwr.ci   upr.ci   pval    
-# 2-1 1.8676 1.594336 2.140864 <2e-16 ***
+# 2-1 2.62664 2.242315 3.010965 <2e-16 ***
 res <- aov(formula = Carats ~ as.factor(clu), data = df)
 PostHocTest(res, method = "bonferroni")
 
@@ -100,11 +102,5 @@ PostHocTest(res, method = "bonferroni")
 
 # $`as.factor(clu)`
 # diff   lwr.ci   upr.ci   pval    
-# 2-1 2.792096 2.635205 2.948986 <2e-16 ***
-
-                    
-
-#             inf       sup
-# IC.T2.X1 -2.259121 -1.476079
-# IC.T2.X2 -3.016882 -2.567309
+# 2-1 1.439199 1.358329 1.520069 <2e-16 ***
 

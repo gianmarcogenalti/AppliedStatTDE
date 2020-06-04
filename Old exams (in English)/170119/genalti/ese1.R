@@ -84,7 +84,7 @@ IC <- rbind(IC.T2.male, IC.T2.female, IC.T2.out, IC.T2.ret)
 
 shapiro.test(df[,4])
 # we have normal univariate data, let's calculate IC
-t.test(df[,4], conf.level = 0.9)
+t.test(df[,4], conf.level = 0.9, alternative = 'greater', mu = 23)
 # One Sample t-test
 # 
 # data:  df[, 4]
