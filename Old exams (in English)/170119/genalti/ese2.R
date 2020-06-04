@@ -1,3 +1,6 @@
+install.packages('DescTools')
+library('DescTools')
+
 load("mcshapiro.test.RData")
 df <- read.table("diamonds.txt")
 head(df)
@@ -79,11 +82,27 @@ P <- 1 - pf(T2/(p*(n1+n2-2)/(n1+n2-1-p)), p, n1+n2-1-p)
 P  
 # P-value is null -> I reject the null hypothesis and accept the alternative one: there are two type of diamonds
 
-# Simultaneous T2 intervals
-IC.T2.X1 <- c(t1.mean[1]-t2.mean[1]-sqrt(cfr.fisher*Sp[1,1]*(1/n1+1/n2)), t1.mean[1]-t2.mean[1]+sqrt(cfr.fisher*Sp[1,1]*(1/n1+1/n2)) )
-IC.T2.X2 <- c(t1.mean[2]-t2.mean[2]-sqrt(cfr.fisher*Sp[2,2]*(1/n1+1/n2)), t1.mean[2]-t2.mean[2]+sqrt(cfr.fisher*Sp[2,2]*(1/n1+1/n2)) )
-IC.T2 <- rbind(IC.T2.X1, IC.T2.X2)
-dimnames(IC.T2)[[2]] <- c('inf','sup')                        
+# Simultaneous Bonferroni intervals
+res <- aov(formula = Diameter ~ as.factor(clu), data = df)
+PostHocTest(res, method = "bonferroni")
+
+# Posthoc multiple comparisons of means : Bonferroni 
+# 95% family-wise confidence level
+
+# $`as.factor(clu)`
+# diff   lwr.ci   upr.ci   pval    
+# 2-1 1.8676 1.594336 2.140864 <2e-16 ***
+res <- aov(formula = Carats ~ as.factor(clu), data = df)
+PostHocTest(res, method = "bonferroni")
+
+# Posthoc multiple comparisons of means : Bonferroni 
+# 95% family-wise confidence level
+
+# $`as.factor(clu)`
+# diff   lwr.ci   upr.ci   pval    
+# 2-1 2.792096 2.635205 2.948986 <2e-16 ***
+
+                    
 
 #             inf       sup
 # IC.T2.X1 -2.259121 -1.476079
