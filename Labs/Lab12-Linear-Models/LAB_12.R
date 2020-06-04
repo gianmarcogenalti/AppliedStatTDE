@@ -4,7 +4,7 @@
 
 ### TOPICS:
 ### Linear models
-
+install.packages("glmnet")
 library(MASS)
 library(car)
 library(rgl)

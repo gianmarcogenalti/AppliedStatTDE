@@ -29,39 +29,6 @@ anova(lm(value ~ type + city, data = df))
 # ---
 #   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-# solo la variabile type pare influire sul value, il nostro modello ridotto comprenderà solo quella
-
-### Note: These aren't the only tests we can do!
-### Example: global test for the significance of the two treatments 
-###          (model without interaction)
-
-kvalue          <- df$value
-kcity      <- factor(df$city)
-ktype        <- factor(df$type)
-
-g <- length(levels(kcity))
-b <- length(levels(ktype))
-n_type <- length(df)
-
-M           <- mean(kvalue)
-Mcity      <- tapply(kvalue, kcity, mean)
-Mtype      <- tapply(kvalue, ktype, mean)
-
-SStype <- sum(n*b*(Mtype - M)^2)                
-SScity  <- sum(n*g*(Mcity  - M)^2)            
-SSres   <- sum((kvalue - M)^2) - (SStype+SScity)   
-
-Ftot      <- ( (SStype + SScity) / ((g-1)+(b-1)))/(SSres / (n*g*b-g-b+1))
-Ptot      <- pf(Ftot, (g-1)+(b-1), n*g*b-g-b+1) # attention to the dgf!
-Ptot
-# non ho evidenza per dire che anche city pesi nel modello, ulteriore riprova
-
-### Reduced additive model (ANOVA one-way, b=2): 
-### X.jk = mu + beta.j + eps.jk; eps.jk~N(0,sigma^2), 
-###     j=1,2 (effect type)
-fit.aov1 <- aov(kvalue ~ ktype)
-summary.aov(fit.aov1)
-
 # verifichiamo le ipotesi per i modelli (in realtà ci interessa che valgano per quello finale)
 
 tokyo <- df[which(df$city == 'Tokyo'),1]
@@ -80,15 +47,25 @@ qqline(rtu)
 bartlett.test(df$value , df$type)
 var.test(hm,rtu) # l'ipotesi sulle varianze è accettabile
 
-SSres <- sum(residuals(fit.aov1)^2)
+
+# solo la variabile type pare influire sul value, il nostro modello ridotto comprenderà solo quella
 
 ### Interval at 95% for the differences (reduced additive model)
 ### [b=2, thus one interval only]
-IC <- c(diff(Mtype) - qt(0.975, (n*g-1)*b) * sqrt(SSres/((n*g-1)*b) *(1/(n*g) + 1/(n*g))), 
-        diff(Mtype) + qt(0.975, (n*g-1)*b) * sqrt(SSres/((n*g-1)*b) *(1/(n*g) + 1/(n*g))))
+n1 <- dim(df[which(df$type == 'hand-made'),])[1]
+n2 <- dim(df[which(df$type == 'ready-to-use'),])[1]
+n <- n1 + n2
+
+M1 <- mean(df[which(df$type == 'hand-made'),1])
+M2 <- mean(df[which(df$type == 'ready-to-use'),1])
+S1 <- var(df[which(df$type == 'hand-made'),1])
+S2 <- var(df[which(df$type == 'ready-to-use'),1])
+Sp <- sqrt(((n1-1)*S1+(n2-1)*S2)/(n1+n2-2))
+delta <- M1 - M2
+
+IC <- c(delta - qt(0.975, n1+n2-2) * Sp * sqrt(1/n1+1/n2), delta + qt(0.975, n1+n2-2) * Sp * sqrt(1/n1+1/n2))
+        
 names(IC) <- c('Inf', 'Sup')
 IC    # IC for mu(ready-to-use)-mu(hand-made)
-
-
 
 

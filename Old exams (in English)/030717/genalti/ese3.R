@@ -66,7 +66,7 @@ coph.es
 x11()
 par(mfrow= c(1,2))
 image(as.matrix(df.e), main='Euclidean', asp=1 )
-image(as.matrix(coph.es), main='Single', asp=1 )
+image(as.matrix(coph.es), main='Complete', asp=1 )
 
 x11() # dendrogramma
 plot(df.es, main='euclidean-single', hang=-0.1, xlab='', labels=F, cex=0.6, sub='')
@@ -99,37 +99,65 @@ win[which(cluster.es == 2)] <- 0 # hanno perso
 
 df$winner <- win
 
-#D <- data.frame(diff_dur = df[which(df$winner == 1),]$duration - df[which(df$winner == 0),]$duration,
-                #diff_time = df[which(df$winner == 1),]$time - df[which(df$winner == 0),]$time,
-                #winner_dur = df[which(df$winner == 1),]$duration,
-                #winner_time = df[which(df$winner == 1),]$time)
+n1 <- dim(df[which(df$winner == 1),])[1]
+n2 <- dim(df[which(df$winner == 0),])[1]
 
-dur       <- df$dur
-time      <- df$time
-win   <- factor(df$winner)
+plot(df$duration, df$time, pch = 16, col = factor(df$win))
 
-g <- length(levels(win))
-n <- length(dur)/g
+var.test(duration ~ winner, data = df)
+# we assume equal variance for duration
+var.test(time ~ winner, data = df)
+# we assume different variance for time
 
-Mdur           <- mean(dur)
-Mtime          <- mean(time)
-Mwin_dur       <- tapply(dur, win, mean)
-Mwin_time      <- tapply(time,win, mean)
+alpha = .05
+k = 4 # to apply bonferroni correction
 
-a <-4
-a*(a-1)/2 # numero di comparazioni
+# IC for duration
+Md1 <- mean(df[which(df$winner == 1),1])
+Md2 <- mean(df[which(df$winner == 0),1])
+Sd1 <- var(df[which(df$winner == 1),1])
+Sd2 <- var(df[which(df$winner == 0),1])
 
-SStype <- sum(n*b*(Mtype - M)^2)                
-SScity  <- sum(n*g*(Mcity  - M)^2)            
-SSres   <- sum((kvalue - M)^2) - (SStype+SScity)
-### Interval at 95% for the differences (reduced additive model)
-### [b=2, thus one interval only]
-IC <- c(diff(Mtype) - qt(0.975, (n*g-1)*b) * sqrt(SSres/((n*g-1)*b) *(1/(n*g) + 1/(n*g))), 
-        diff(Mtype) + qt(0.975, (n*g-1)*b) * sqrt(SSres/((n*g-1)*b) *(1/(n*g) + 1/(n*g))))
-names(IC) <- c('Inf', 'Sup')
-IC    # IC for mu(ready-to-use)-mu(hand-made)
+Spd <- sqrt(((n1-1)*Sd1 + (n2-1)*Sd2)/(n1+n2-2))
 
+IC.d <- c(Md1 - Md2 - qt(1-alpha/(2*k), n1+n2-2) * Spd * sqrt(1/n1+1/n2), Md1 - Md2 + qt(1-alpha/(2*k), n1+n2-2) * Spd * sqrt(1/n1+1/n2))
+names(IC.d) <- c('Inf', 'Sup')
+IC.d   
 
+# IC for time
+Mt1 <- mean(df[which(df$winner == 1),2])
+Mt2 <- mean(df[which(df$winner == 0),2])
+St1 <- var(df[which(df$winner == 1),2])
+St2 <- var(df[which(df$winner == 0),2])
+
+v <- ((St1/n1+St2/n2)^2)/((St1^2)/((n1^2)*(n1-1)) + (St2^2)/((n2^2)*(n2-1)))
+
+IC.t <- c(Mt1 - Mt2 - qt(1-alpha/(2*k), v) * sqrt((St1/n1+St2/n2)^2), Mt1 - Mt2 + qt(1-alpha/(2*k), v) * sqrt((St1/n1+St2/n2)^2))
+names(IC.t) <- c('Inf', 'Sup')
+IC.t
+
+# IC for mean duration in winners
+shapiro.test(df[which(df$winner == 1),1])
+
+IC.wd <- c(Md1 - qt(1-alpha/(2*k), n1-1)* sqrt(Sd1/n1),Md1 + qt(1-alpha/(2*k), n1-1)* sqrt(Sd1/n1))
+names(IC.wd) <- c('Inf', 'Sup')
+IC.wd
+
+# IC for mean time in winners
+shapiro.test(df[which(df$winner == 1),2])
+
+IC.wt <- c(Mt1 - qt(1-alpha/(2*k), n1-1)* sqrt(St1/n1),Mt1 + qt(1-alpha/(2*k), n1-1)* sqrt(St1/n1))
+names(IC.wt) <- c('Inf', 'Sup')
+IC.wt
+
+IC.d
+IC.t
+IC.wd 
+IC.wt
+
+# c'è evidenza per dire che i vincitori inizino prima il tour, tra le 16:40 e le 16:50, inoltre mediamente il tour
+# dei vincitori dura di più dei perdenti, di circa 40-50 minuti. Il consiglio che do è di iniziare il tour tra e 16:40 e le 16:50
+# e di continuare per almeno un'ora e mezza la ricerca!
 
 
 
