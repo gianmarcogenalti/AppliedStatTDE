@@ -8,7 +8,7 @@ diam.sd <- scale(diam)
 diam.sd <- data.frame(diam.sd)
 
 plot(diam)
-plot(diam.sd) #perchè c'erano unità di misura diverse: prima 10 - 2.5, ora 3 - 3
+plot(diam.sd) #perch?? c'erano unit?? di misura diverse: prima 10 - 2.5, ora 3 - 3
 
 
 #based on Euclidean distance and Ward linkage
@@ -53,7 +53,7 @@ N <- sum(ng)
 mcshapiro.test(nuovo[which(nuovo$sata==1),1:2])
 mcshapiro.test(nuovo[which(nuovo$sata==2),1:2])
 mcshapiro.test(nuovo[which(nuovo$sata==3),1:2])
-#omogeneità varianze
+#omogeneit?? varianze
 S1 <-  cov(nuovo[which(nuovo$sata==1),1:2])
 S2 <-  cov(nuovo[which(nuovo$sata==2),1:2])
 S3 <-  cov(nuovo[which(nuovo$sata==3),1:2])
@@ -79,11 +79,11 @@ alpha <- 0.05
 k <- 6
 k
 
-qT <- qt(1-alpha/(2*k), N-g)
+qT <- qt(1-alpha/(2*k), n-g)
 
 # I need the diagonal of W
 fit$res   # residuals of the estimated model
-W <- diag(t(fit$res) %*% fit$res)/(N-g)   
+W <- diag(t(fit$res) %*% fit$res)/(n-g)   
 W
 # mean within the groups
 nuovo=cbind(satellite,sata)

@@ -1,6 +1,7 @@
 library(car)
 library(MASS)
 library(class)
+library(mvtnorm)
 
 mcshapiro.test <- function(X, devstmax = 0.01, sim = ceiling(1/(4*devstmax^2)))
 {
@@ -23,11 +24,10 @@ mcshapiro.test <- function(X, devstmax = 0.01, sim = ceiling(1/(4*devstmax^2)))
 }
 
 
-df = read.table("tide.txt", header=T)
+df = read.table("mickey.txt", header=T)
 head(df)
 dim(df)
 n = dim(df)[1]
 p = dim(df)[2]
 
 attach(df)
-  

@@ -1,6 +1,12 @@
 library(car)
 library(MASS)
 library(class)
+library(mvtnorm)
+library(sp)           ## Data management
+library(lattice)      ## Data management
+library(geoR)         ## Geostatistics
+library(gstat)        ## Geostatistics
+library(tidyverse)
 
 mcshapiro.test <- function(X, devstmax = 0.01, sim = ceiling(1/(4*devstmax^2)))
 {
@@ -23,11 +29,32 @@ mcshapiro.test <- function(X, devstmax = 0.01, sim = ceiling(1/(4*devstmax^2)))
 }
 
 
-df = read.table("tide.txt", header=T)
-head(df)
-dim(df)
-n = dim(df)[1]
-p = dim(df)[2]
+df = read.table("wellness.txt", header=T)
 
-attach(df)
+stat = c()
+set.seed(321)
+
+for (i in 1:500) {
+  er = c()
+  for (j in 1:14) {
+    er = c(er, df[j,sample(1:14)[1]])
+  }
+  stat = c(stat, mean(er))
   
+}
+
+  hist(stat)
+
+for (i in 1:11) {
+  abline(v=mean(df[,i]))
+  print(paste(i, sum(mean(df[,i]) > stat)/500, mean(df[,i])))
+}
+
+# b
+  
+p.adjust(...)
+
+
+
+
+

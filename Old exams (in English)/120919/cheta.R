@@ -1,31 +1,64 @@
-# Cluster and difference of means
+# Clustering and Bonferroni
+
+# Test for independent Gaussian populations
+t1.mean <- sapply(vowels[pag=='1',],mean)
+t2.mean <- sapply(vowels[pag=='2',],mean)
+t1.cov  <-  cov(vowels[pag=='1',])
+t2.cov  <-  cov(vowels[pag=='2',])
+Sp      <- ((n1-1)*t1.cov + (n2-1)*t2.cov)/(n1+n2-2)
+
+# Test: H0: mu.1-mu.2==0 vs H1: mu.1-mu.2!=0
+delta.0 <- c(0,0,0,0,0)
+Spinv   <- solve(Sp)
+T2 <- n1*n2/(n1+n2) * (t1.mean-t2.mean-delta.0) %*% Spinv %*% (t1.mean-t2.mean-delta.0)
+P <- 1 - pf(T2/(p*(n1+n2-2)/(n1+n2-1-p)), p, n1+n2-1-p)
+P
+
 ### question c)
-alpha <- 0.05
-k <- 6
-k
-
-qT <- qt(1-alpha/(2*k), N-g)
-
-# I need the diagonal of W
-fit$res   # residuals of the estimated model
-W <- diag(t(fit$res) %*% fit$res)/(N-g)   
-W
-# mean within the groups
-nuovo=cbind(satellite,sata)
-m1 <- colMeans(nuovo[which(nuovo$sata==1),1:2])
-m2 <- colMeans(nuovo[which(nuovo$sata==2),1:2])
-m3 <- colMeans(nuovo[which(nuovo$sata==3),1:2])
-m1
-m2
-m3
-
-
-Bf12 <- cbind(m1-m2 - qt(1 -alpha/(2*k), N-g) * sqrt((1/ng[1]+1/ng[2])*W), m1-m2, m1-m2 + qt(1 -alpha/(2*k), N-g) * sqrt((1/ng[1]+1/ng[2])*W))
-Bf23 <- cbind(m2-m3 - qt(1 -alpha/(2*k), N-g) * sqrt((1/ng[2]+1/ng[3])*W), m2-m3, m2-m3 + qt(1 -alpha/(2*k), N-g) * sqrt((1/ng[2]+1/ng[3])*W))
-Bf31 <- cbind(m3-m1 - qt(1 -alpha/(2*k), N-g) * sqrt((1/ng[3]+1/ng[1])*W), m3-m1, m3-m1 + qt(1 -alpha/(2*k), N-g) * sqrt((1/ng[3]+1/ng[1])*W))
-
-IC <- list(gemme1-gemme2=Bf12, gemme2-gemme3=Bf23, gemme3-gemme1=Bf31)
+alpha <- 0.1
+IC <- cbind(t2.mean-t1.mean - sqrt(diag(Sp)*(1/n1+1/n2)) * qt(1 - alpha/(p*2), n1+n2-2),
+            t2.mean-t1.mean,
+            t2.mean-t1.mean + sqrt(diag(Sp)*(1/n1+1/n2)) * qt(1 - alpha/(p*2), n1+n2-2))
 IC
+
+
+
+# Clustering (or Anova) and Bonferroni
+
+
+fit <- aov(price ~ area)
+summary.aov(fit)
+
+
+
+# c)
+k <- 3
+alpha=.01
+ng <- table(area)
+treat <- levels(area)
+N <- dim(data)[1]
+
+Media   <- mean(price)
+Mediag  <- tapply(price, area, mean)
+
+dof <- fit$df
+Spooled <- sum(fit$residuals^2)/dof
+
+
+ICrange=NULL
+for(i in 1:(b-1)) {
+  for(j in (i+1):b) {
+    print(paste(treat[i],"-",treat[j]))        
+    print(as.numeric(c(Mediag[i]-Mediag[j] - qt(1-alpha/(2*k), dof) * sqrt( Spooled * ( 1/ng[i] + 1/ng[j] )),
+                       Mediag[i]-Mediag[j] + qt(1-alpha/(2*k), dof) * sqrt( Spooled * ( 1/ng[i] + 1/ng[j] )))))
+    ICrange=rbind(ICrange,as.numeric(c(Mediag[i]-Mediag[j] - qt(1-alpha/(2*k), dof) * sqrt( Spooled * ( 1/ng[i] + 1/ng[j] )),
+                                       Mediag[i]-Mediag[j] + qt(1-alpha/(2*k), dof) * sqrt( Spooled * ( 1/ng[i] + 1/ng[j] )))))
+  }
+}
+
+
+
+
 
 
 
@@ -97,6 +130,94 @@ IC.T2
 
 
 
-# 
+#  Paired multivariate gaussian
+
+
+D <- data.frame(a=df[,1]-df[,2], b=df[,3]-df[,4]) 
+D.mean   <- sapply(D,mean)
+D.cov    <- cov(D)
+D.invcov <- solve(D.cov)
+
+mcshapiro.test(D)
+
+
+# test for the mean
+n <- dim(D)[1]
+p <- dim(D)[2]
+
+D.mean   <- sapply(D,mean)
+D.cov    <- cov(D)
+D.invcov <- solve(D.cov)
+
+alpha   <- .01
+delta.0 <- c(0,0)
+
+D.T2 <- n * (D.mean-delta.0) %*% D.invcov %*% (D.mean-delta.0)
+D.T2
+
+cfr.fisher <- ((n-1)*p/(n-p))*qf(1-alpha,p,n-p)
+cfr.fisher
+
+D.T2 < cfr.fisher # FALSE: we reject H0 at level 1%
+
+
+
+
+
+
+
+
+
+# qda regions
+
+priors = table(gain)/ n
+
+m = qda(df[,c(1,2)], df[,3])
+
+
+
+# discrimination region
+plot(df[,1:2], main='Plot', xlab='x1', ylab='x2', pch=20)
+
+points(m$means, pch=4,col=c('red','blue') , lwd=2, cex=1.5)
+
+x  <- seq(min(df[,1]), max(df[,1]), length=200)
+y  <- seq(min(df[,2]), max(df[,2]), length=200)
+xy <- expand.grid(google=x, apple=y)
+
+z  <- predict(m, xy)$post  
+z1 <- z[,1] - z[,2] 
+z2 <- z[,2] - z[,1]  
+
+contour(x, y, matrix(z1, 200), levels=0, drawlabels=F, add=T)  
+contour(x, y, matrix(z2, 200), levels=0, drawlabels=F, add=T)
+
+mcv <- qda(df[,c(1,2)], df[,3], CV=T)
+errorsqCV <- (mcv$class != df[,3])
+
+AERqCV   <- sum(errorsqCV)/length(df[,3])
+AERqCV
+
+
+    
+
+
+
+
+
+# Bonferroni intervals for the mean
+df.mean = sapply(df, mean)
+df.cov = cov(df)
+n = dim(df)[1]
+p = dim(df)[2]
+alpha = 0.01
+# Let's try with Bonferroni intervals ##########4
+k <- p # number of intervals I want to compute (set in advance)
+cfr.t <- qt(1-alpha/(2*k),n-1)
+Bf <- cbind(inf = df.mean - cfr.t*sqrt(diag(df.cov)/n),
+            center = df.mean, 
+            sup = df.mean + cfr.t*sqrt(diag(df.cov)/n))
+Bf
+
 
 

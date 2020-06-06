@@ -1,5 +1,6 @@
 library(car)
 library(MASS)
+library(mvtnorm)
 library(class)
 
 mcshapiro.test <- function(X, devstmax = 0.01, sim = ceiling(1/(4*devstmax^2)))
@@ -23,11 +24,35 @@ mcshapiro.test <- function(X, devstmax = 0.01, sim = ceiling(1/(4*devstmax^2)))
 }
 
 
-df = read.table("tide.txt", header=T)
+df = read.table("areaC.txt", header=T)
 head(df)
 dim(df)
 n = dim(df)[1]
 p = dim(df)[2]
 
 attach(df)
-  
+m = lm(Total ~ Weekend + Petrol + Diesel + Electric + GPL + Natural.Gas + Hybrid.Diesel + Hybrid.Petrol)
+summary(m)
+
+plot(m)
+hist(Total)
+
+
+# c
+
+### A possible solution to collinearity: PCA
+df.pc <- princomp(df[,c(1,2,3,4,5,6,7,9)], scores=TRUE)
+summary(df.pc)
+df.pc$load
+
+df.load = df.pc$loadings
+
+par(mfcol = c(4,2))
+for(i in 1:8) barplot(df.load[,i], ylim = c(-1, 1), main=paste("PC",i))
+
+# d
+fm.pc <- lm(Total ~ df.pc$scores[,1:5])
+
+summary(fm.pc) 
+
+
