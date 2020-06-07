@@ -34,10 +34,10 @@ df = read.table("wellness.txt", header=T)
 stat = c()
 set.seed(321)
 
-for (i in 1:500) {
+for (i in 1:5000) {
   er = c()
   for (j in 1:14) {
-    er = c(er, df[j,sample(1:14)[1]])
+    er = c(er, df[j,sample(1:11)[1]])
   }
   stat = c(stat, mean(er))
   
