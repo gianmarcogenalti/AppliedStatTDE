@@ -31,6 +31,7 @@ means <- colMeans(diff)
 Sd <- cov(diff)
 n <- dim(diff)[1]
 p <- 4
+alpha = 0.05
 
 
 test_stat <- n*t(means)%*%solve(Sd)%*%means

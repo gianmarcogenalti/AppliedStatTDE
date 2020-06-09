@@ -4,7 +4,7 @@ dist_eucl <- dist(geisha, method = "euclidean")
 hclust_single <- hclust(dist_eucl, method = "single")
 
 plot(hclust_single, labels = F, sub = "")
-tree_single <- cutree(hclust_single, k = 3)
+tree_single <- cutree(hclust_single, k = 2)
 
 plot(geisha, col = tree_single)
 
@@ -41,3 +41,5 @@ bonf.conf.2 <- cbind(inf = mean_s - qt(1 - alpha/(2*k), n1-1)*sqrt(diag(Sd1)/n1)
 bonf.conf.2
 
 # conviene andare un po' prima e fare un giro lungo
+
+
