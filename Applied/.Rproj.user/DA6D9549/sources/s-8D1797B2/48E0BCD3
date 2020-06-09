@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1591707662750.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3550229963",
+    "id" : "48E0BCD3",
+    "lastKnownWriteTime" : 1590836245,
+    "last_content_update" : 1590836245,
+    "path" : "C:/Users/ffede/OneDrive/Desktop/AppliedStatTDE/Labs/Lab6-Paired-Gaussian/LAB_6.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "476,5",
+        "scrollLine" : "469"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
