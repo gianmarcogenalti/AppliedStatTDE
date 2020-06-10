@@ -1,6 +1,6 @@
 df <- read.table("sequoia.txt")
 
-eu <- dist(df, method='euclidian')
+eu <- dist(df, method='euclidean')
 ward <- hclust(eu, method='ward.D')
 
 plot(ward, labels = F, sub = "")
