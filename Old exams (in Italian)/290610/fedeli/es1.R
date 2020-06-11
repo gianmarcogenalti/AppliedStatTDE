@@ -1,6 +1,6 @@
 mu <- c(30,50)
 S <- cbind(c(1,1),c(1,2))
-fisher <- ((q-1)*(n-1)/(n-(q-1)))*qf(1-alpha,(q-1),n-(q-1))
+#fisher <- ((q-1)*(n-1)/(n-(q-1)))*qf(1-alpha,(q-1),n-(q-1))
 
 eig <- eigen(S)$vectors
 eig_v <- eigen(S)$values
@@ -13,7 +13,7 @@ T2 <- cbind(inf = mu - r*sqrt(diag(S)),
             sup = mu + r*sqrt(diag(S)))
 
 plot(mu[1],mu[2],asp=1, pch=5, main='Cryptozoology',xlim=c(20,40),ylim=c(40,60))
-ellipse(center=mu, shape = S, radius = r, lwd=2) 
+ellipse(center=mu, shape = S, radius = r, lwd=2, add = F, asp = 1) 
 
 
 segments(T2[1,1],T2[2,1],T2[1,3],T2[2,1], col = 'red')

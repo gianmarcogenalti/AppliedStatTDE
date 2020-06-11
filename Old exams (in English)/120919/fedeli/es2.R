@@ -38,4 +38,4 @@ for (k in 1:length(df[1,])){
 true_stat
 p_val
 
-p.adjust(p_val, method="bh", n=length(df[1,]))
+p.adjust(p_val, method="BH", n=length(df[1,]))

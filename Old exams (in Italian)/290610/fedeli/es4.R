@@ -54,3 +54,13 @@ CI_var <- c((n-1)*var1/qchisq(1-alpha/(2*k),n-1),(n-1)*var1/qchisq(alpha/(2*k),n
 CI_var
 
 # d ed e non capisco la consegna
+
+C <- c(-1,2,0)
+stat <- t(C)%*%(coefficients(fit1))/sqrt(t(C)%*%vcov(fit1)%*%C)
+p <- 1 - pt(stat,n-1)
+p
+
+C <- c(-1,2,2)
+stat <- t(C)%*%(coefficients(fit1))/sqrt(t(C)%*%vcov(fit1)%*%C)
+p <- 1 - pt(stat,n-1)
+p
