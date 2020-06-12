@@ -1,9 +1,13 @@
 {
-    "path" : "C:/Users/ffede/OneDrive/Desktop/AppliedStatTDE/Old exams (in English)/280619",
+    "path" : "C:/Users/ffede/OneDrive/Desktop/AppliedStatTDE/Labs/Extra-FDA",
     "sortOrder" : [
         {
             "ascending" : true,
             "columnIndex" : 2
+        },
+        {
+            "ascending" : false,
+            "columnIndex" : 3
         }
     ]
 }
