@@ -1,3 +1,4 @@
+rm(list = ls())
 df <- read.table("stress.txt")
 head(df)
 tail(df)
@@ -32,7 +33,7 @@ for(i in 1:8){
   #abline(v=T0,col=3,lwd=2)
   
   # p-value
-  p_val[i] <- sum(T_stat<T0)/B
+  p_val[i] <- sum(T_stat < T0)/B
   stat[i] <- mean(T_stat)
   Tzero[i] <- T0
 }
