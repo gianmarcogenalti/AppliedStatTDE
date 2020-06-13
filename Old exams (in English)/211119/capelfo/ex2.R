@@ -44,11 +44,14 @@ for (i in 1:5000) {
 }
 
   hist(stat)
-
+p_val2 <- rep(NA,length(df[1,]))
 for (i in 1:11) {
   abline(v=mean(df[,i]))
-  print(paste(i, sum(mean(df[,i]) > stat)/500, mean(df[,i])))
+  print(paste(i, sum(mean(df[,i]) > stat)/5000, mean(df[,i])))
+  p_val2[i] <- sum( stat > mean(df[,i]) )/5000
 }
+
+p_val2
 
 # b
   
