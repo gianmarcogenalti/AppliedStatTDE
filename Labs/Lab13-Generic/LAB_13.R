@@ -5,9 +5,34 @@
 ### TOPICS:
 ### Exercises from past exams
 
-library(MASS)
 library(car)
-library(rgl)
+library(MASS)
+library(class)
+library(mvtnorm)
+library(sp)           ## Data management
+library(lattice)      ## Data management
+library(geoR)         ## Geostatistics
+library(gstat)        ## Geostatistics
+
+mcshapiro.test <- function(X, devstmax = 0.01, sim = ceiling(1/(4*devstmax^2)))
+{
+  library(mvnormtest)
+  n   <- dim(X)[1]
+  p   <- dim(X)[2]
+  mu  <- rep(0,p)
+  sig <- diag(p)
+  W   <- NULL
+  for(i in 1:sim)
+  {
+    Xsim <- rmvnorm(n, mu, sig)
+    W   <- c(W, mshapiro.test(t(Xsim))$stat)
+    # mshapiro.test(X): compute the statistics min(W) for the sample X
+  }
+  Wmin   <- mshapiro.test(t(X))$stat   # min(W) for the given sample
+  pvalue <- sum(W < Wmin)/sim          # proportion of min(W) more extreme than the observed Wmin
+  devst  <- sqrt(pvalue*(1-pvalue)/sim)
+  list(Wmin = as.vector(Wmin), pvalue = pvalue, devst = devst, sim = sim)
+}
 
 setwd("D:/RTDA/Didattica/Applied Statistics MATE 19-20/Lab 13 - 05062020")
 load("D:/RTDA/Didattica/Applied Statistics MATE 19-20/Lab 5 - 16042020/mcshapiro.test.RData")
@@ -890,7 +915,7 @@ ICT2.bis
 # PoliTermos produces thermostats for the Italian market. During the last month
 # some faulty thermostats have been introduced accidentally on the market;
 # it is estimated that these are about 10% of sales. Lab test demonstrate that,
-# in a 1°C temperature environment, the not defective thermostats detect a 
+# in a 1?C temperature environment, the not defective thermostats detect a 
 # temperature normally distributed, with mean 1 and variance 1/2, while
 # the defective thermostats according to an exponential law with mean 1 and 
 # variance 1. All the thermostats sold last month were recalled for possible 
@@ -901,8 +926,8 @@ ICT2.bis
 # a) Formulate a criterion for the replacement, based on the temperature measured 
 #    during the test, which minimizes the damage expected by the company.
 # Two thermostats of your property were recalled for inspection.
-# The first during the experiment revealed a temperature of -1°C, the
-# second equal to 3°C:
+# The first during the experiment revealed a temperature of -1?C, the
+# second equal to 3?C:
 # b) Will the first thermostat be replaced? How likely is it defective?
 # c) Will the second thermostat be replaced? How likely is it defective?
 
@@ -928,8 +953,8 @@ segments(0,-.03,R[1],-.03, col='red')
 segments(R[2],-.03,10,-.03, col='red')
 segments(-2,-.03,0,-.03, col='blue')
 
-# The first during the experiment revealed a temperature of -1°C, the
-# second equal to 3°C:
+# The first during the experiment revealed a temperature of -1?C, the
+# second equal to 3?C:
 # b) Will the first thermostat be replaced? How likely is it defective?
 # c) Will the second thermostat be replaced? How likely is it defective?
 

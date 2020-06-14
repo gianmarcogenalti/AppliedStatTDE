@@ -260,6 +260,7 @@ cv.lasso <- cv.glmnet(x,y,lambda=lambda.grid) # default: 10-fold CV
 bestlam.lasso <- cv.lasso$lambda.min
 bestlam.lasso
 
+
 plot(cv.lasso)
 abline(v=log(bestlam.lasso), lty=1)
 

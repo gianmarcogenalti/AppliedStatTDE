@@ -93,4 +93,32 @@ t.test(df[,2] - 1.2*df[,4], mu=0, alternative = "l")
 
 
 
+################444444
 
+
+df = read.table("tesco.txt", header=T)
+head(df)
+dim(df)
+n = dim(df)[1]
+p = dim(df)[2]
+attach(df)
+
+m = lm(spesa ~ status + sesso + stipendio + stipendio:status + stipendio:sesso)
+summary(m)
+
+mm = lm(spesa ~ status + stipendio + stipendio:status)
+summary(mm)
+
+k <- 2
+alpha <- .05
+n <- dim(df)[1]
+r <- 3
+
+Z0   <- data.frame(status="Single", stipendio=1200)
+ICBmean <- predict(mm, Z0, interval='confidence',level=1-alpha/k) 
+ICBmean
+
+e <- residuals(mm)
+ICBvar <- data.frame(L=t(e)%*%e/qchisq(1-alpha/(2*k),n-(r+1)),
+                     U=t(e)%*%e/qchisq(alpha/(2*k),n-(r+1)))
+ICBvar

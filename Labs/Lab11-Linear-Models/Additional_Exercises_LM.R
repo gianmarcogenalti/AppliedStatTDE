@@ -6,7 +6,7 @@ library(car)
 #_______________________________________________________________________________
 ##### Problem 2 of 28/2/2007
 #####--------------------------------------
-# Pb2.txt dataset shows average monthly temperature (°C) recorded in
+# Pb2.txt dataset shows average monthly temperature (?C) recorded in
 # 2006 in three Canadian locations: Edmonton, Montreal and Resolute.
 # It is common in meteorology to assume that the average monthly 
 # temperatures fluctuatesinusoidally around an annual average value:
@@ -19,11 +19,11 @@ library(car)
 # (c) Taking advantage of the known trigonometric relation
 #     sin(alpha-beta) = sin(alpha) * cos(beta) - cos(alpha) * sin(beta)
 #     and reinterpreting the model of the form:
-#     Tempg (t) = Î¼.g + A.g * sin (2pi / 12 * (t-phi.g) + eps
+#     Tempg (t) = ??.g + A.g * sin (2pi / 12 * (t-phi.g) + eps
 #     report the analytical relation between the new parameters
-#     (Îœ.g, A.g, phi.g) and the old parameters (beta0.g, beta1.g, beta2.g).
+#     (??.g, A.g, phi.g) and the old parameters (beta0.g, beta1.g, beta2.g).
 # (d) Estimate the parameters of the new formulation, namely:
-#     - The annual average values (Î¼.g).
+#     - The annual average values (??.g).
 #     - The oscillation amplitudes (A.g).
 #     - The phases of the oscillations (phi'g).
 # (e) Through the use of an appropriate statistical test (report the
@@ -108,12 +108,12 @@ linearHypothesis(fit,
 # which the linear trend "momentarily" changed (in a discontinuous way) 
 # during the French hegemony period (1768, the Treaty of Versailles, 1815, 
 # Battle diWaterloo, inclusive), during which a collapse of the works annually 
-# added to the Index occurred (Model B). Defining as Î¼(t) the average number 
+# added to the Index occurred (Model B). Defining as ??(t) the average number 
 # of works added to the Index in year t, and formalizing the two models as 
 # follows:
-# Model A: Î¼(t) = alpha + beta * t;
-# Model B: Î¼(t) = alpha1 + beta1 * t for 1768 <= t <= 1815
-#          Î¼(t) = alpha2 + beta2 * t for t <= 1767 or t> = 1816;
+# Model A: ??(t) = alpha + beta * t;
+# Model B: ??(t) = alpha1 + beta1 * t for 1768 <= t <= 1815
+#          ??(t) = alpha2 + beta2 * t for t <= 1767 or t> = 1816;
 # answer the following questions:
 # a) estimate the parameters of both models using the method of least squares;
 #    which assumptions needs to be introduced in order to get unbiased estimates?
@@ -199,12 +199,12 @@ detach(index)
 ##### Problem 4 del 4/7/2007
 #####-------------------------
 # At the Tenaris steel mills, the relationship between length [m] and
-# Temperature [°C] of some steel bars that will be sold to Pirelli
+# Temperature [?C] of some steel bars that will be sold to Pirelli
 # is under study (the data are contained in tenaris.txt file). The relation
 # is hypothesized of the kind:
 #   L = L0 + C* T + D  * T ^ 2 + eps
 # with L the length of the bar, T the temperature of the bar, L0 the length 
-# of the bar at 0 °C, C the coefficientof of linear thermal expansion, D
+# of the bar at 0 ?C, C the coefficientof of linear thermal expansion, D
 # the coefficient of quadratic thermal expansion and eps a measurement error
 # of zero mean.
 # Answer the following questions using appropriate statistical arguments:
@@ -215,7 +215,7 @@ detach(index)
 #    identify the problem, remove it and return to point (a))
 # c) Do you think that the model explains the possible dependence between 
 #    the temperature T and the length L?
-# d) do you deem plausible to consider that the length of the bars at 0 °C
+# d) do you deem plausible to consider that the length of the bars at 0 ?C
 #    is equal to 2?
 # E) do you think that you can eliminate from the model the quadratic term?
 
