@@ -335,6 +335,7 @@ p <- dim(extra)[2]
 x.mean <- sapply(extra,mean)
 x.cov <- cov(extra)
 x.inv <- solve(x.cov)
+alpha <- .1
 
 cfr.fisher <- (n-1)*p/(n-p)*qf(1-alpha,p,n-p)
 
@@ -363,7 +364,7 @@ t.stat <- (mean(extra %*% a) - delta.0 ) / sqrt( var(extra %*% a) / n ) # t-stat
 # Reject for large values of t 
 # => compute the p-value as the probability of the right tail (i.e., of values >tstat)
 P <- 1-pt(t.stat, n-1)
-P
+P # 0.009578172
 
 ### question c)
 a2 <- c(1,1)

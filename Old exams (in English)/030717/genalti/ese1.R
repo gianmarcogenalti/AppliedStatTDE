@@ -1,15 +1,15 @@
+library(car)
 df <- read.table("kimono.txt")
 head(df)
 
-anova(lm(value ~ type + city + type:city, data = df))
-
+a <- anova(lm(value ~ type + city + type:city, data = df))
 
 # Analysis of Variance Table
 
 # Response: value
-# Df  Sum Sq Mean Sq    F value Pr(>F)    
+#            Df  Sum Sq Mean Sq    F value Pr(>F)    
 # type        1 29342.6 29342.6 14528.1695 <2e-16 ***
-#   city        1     1.9     1.9     0.9305 0.3352    
+# city        1     1.9     1.9     0.9305 0.3352    
 # type:city   1     0.3     0.3     0.1240 0.7249    
 # Residuals 524  1058.3     2.0                      
 # ---
@@ -22,9 +22,9 @@ anova(lm(value ~ type + city, data = df))
 # Analysis of Variance Table
 # 
 # Response: value
-# Df  Sum Sq Mean Sq   F value Pr(>F)    
+#            Df  Sum Sq Mean Sq   F value Pr(>F)    
 # type        1 29342.6 29342.6 14552.451 <2e-16 ***
-#   city        1     1.9     1.9     0.932 0.3348    
+# city        1     1.9     1.9     0.932 0.3348    
 # Residuals 525  1058.6     2.0                     
 # ---
 #   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1

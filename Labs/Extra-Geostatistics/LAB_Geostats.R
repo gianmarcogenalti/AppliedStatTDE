@@ -474,6 +474,13 @@ g.tr <- gstat(formula = Bq ~ D, data = data, model = v.fit1)
 predict(g.tr, data[1,], BLUE = TRUE)
 predict(g.tr, data[6,], BLUE = TRUE)
 
+s.0  <- c(78.614, 34.916)
+#coordinates(s.0) <- c('x','y')
+z0.new <- data.frame(x = rep(s.0[1],2), y = rep(s.0[2],2), D = c(0,1))
+coordinates(z0.new) <- c('x','y')
+g.tr <- gstat(formula = Bq ~ D, data = data, model = v.fit1)
+predict(g.tr, z0.new, BLUE = TRUE)
+
 ## point b)
 ## fitting a variogram with nugget
 
